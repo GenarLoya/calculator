@@ -131,6 +131,11 @@ var _ = Describe("TokenizerValidator", func() {
 			input:    "1 + 2 * 3 / eee(4 ^ 5) * 6 (7)",
 			expected: false,
 		},
+		{
+			name:     "Validate 1 + 2 * 3 / (4 ^ 5) * () * 6 *  ()",
+			input:    "1 + 2 * 3 / (4 ^ 5) * () * 6 *  ()",
+			expected: false,
+		},
 	}
 
 	for _, test := range testValidate {

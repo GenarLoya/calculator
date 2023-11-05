@@ -28,6 +28,12 @@ func TokenizerValidator(text string) bool {
 		return false
 	}
 
+	invalidOpenParenthesesNotClose := regexp.MustCompile(`\(\)`)
+
+	if invalidOpenParenthesesNotClose.MatchString(text) {
+		return false
+	}
+
 	// Check for consecutive invalid signs
 	invalidSigns := regexp.MustCompile(`[+\-*\/^]{2,}`)
 	if invalidSigns.MatchString(text) {
