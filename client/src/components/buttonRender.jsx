@@ -8,7 +8,7 @@ const CalculatorButton = ({ value, onClick, columns = 1 }) => {
         typeof onClick === "function" && onClick(value);
       }}
       className={classNames(
-        "rounded-3 border-none border-gray-500 bg-slate-300 p-4 align-middle",
+        "rounded-3 border-none border-gray-500 bg-slate-300 p-4 align-middle duration-150 hover:scale-130 hover:shadow-lg hover:shadow-slate-500 hover:bg-slate-400 hover:text-white hover:font-bold hover:rounded-3 hover:border-none hover:border-gray-500 hover:bg-slate-300 hover:p-4 hover:align-middle",
         {
           "col-span-2": columns === 2,
           "col-span-3": columns === 3,

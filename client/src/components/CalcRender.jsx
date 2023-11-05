@@ -49,16 +49,21 @@ export default function CalcRender() {
     >
       <Toaster />
       <span className="h-max flex justify-end text-sm">CASIO</span>
-      <input
-        type="text"
-        value={display}
-        role="calc-display"
-        className="h-10% px-2 pt-3 mb-5  bg-neutral-3 rounded-3 text-lg cursor-cell ring-0 focus:ring-0 focus:shadow-slate-8 focus:shadow-lg focus:outline-none duration-150 border-0"
-        style={{ fontFamily: "system-ui" }}
-      ></input>
+      <div className="flex space-x-2 h-10%">
+        <input
+          type="text"
+          value={display}
+          role="calc-display"
+          className="h-full px-2 pt-3 mb-5  bg-neutral-3 rounded-3 text-lg cursor-cell ring-0 focus:ring-0 focus:shadow-slate-8 focus:shadow-lg focus:outline-none duration-150 border-0"
+          style={{ fontFamily: "system-ui" }}
+          onChange={(e) => setDisplay(e.target.value)}
+        ></input>
+
+        <button className="bg-red rounded-3 h-fullpx-2 pt-3 mb-5 border-none focus:outline-blueGray duration-150 hover:scale-150" onClick={deleteLastChar}>Del</button>
+      </div>
       <section role="calc-buttons" className="grid grid-cols-4 gap-4 px-1 py-2">
         <CalculatorButton value="C" onClick={clear} />
-        <CalculatorButton value="Del" onClick={deleteLastChar} columns={2} />
+        <CalculatorButton value="^" onClick={placeSymbol} columns={2} />
         <CalculatorButton value="/" onClick={placeSymbol} />
         <CalculatorButton value="7" onClick={placeSymbol} />
         <CalculatorButton value="8" onClick={placeSymbol} />
