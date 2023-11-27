@@ -67,7 +67,7 @@ var pppeTable = []struct {
 }
 
 func unitTypeResolver(token string) UnitType {
-	_, err := strconv.Atoi(token)
+	_, err := strconv.ParseFloat(token, 64)
 
 	if err == nil {
 		return Number

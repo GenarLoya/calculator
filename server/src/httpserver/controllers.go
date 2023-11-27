@@ -27,18 +27,24 @@ func GetPostFixResult(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(body.Expression)
+	fmt.Println(body.Expression, "EXPRESIO")
 
 	// Generar el resultado de la expresión.
 	result, err := pGen.PostfixManager(body.Expression)
 
+	fmt.Println(result, "RESULDYHCBUGJBH")
+
 	if err != nil {
+
+		fmt.Println("ERROR EN RESULT")
 
 		errMsg := fmt.Sprintf("Error al generar el resultado: %s", err.Error())
 
 		http.Error(w, errMsg, http.StatusBadRequest)
 		return
 	}
+
+	fmt.Println(result, "RESULTTTTTT")
 
 	// Convertir el resultado a JSON.
 	jsonResult, err := json.Marshal(responsePostFix{Result: result})

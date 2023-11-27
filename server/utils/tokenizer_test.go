@@ -36,6 +36,27 @@ var _ = Describe("Tokenizer", func() {
 		Expect(tokens).To(Equal(expectTokens))
 	})
 
+	It("Return list of simple tokens when contains doubles", func() {
+		tokens := Tokenizer("14.4 * 4")
+		expectTokens := []string{"14.4", "*", "4"}
+
+		Expect(tokens).To(Equal(expectTokens))
+	})
+
+	It("Return list of simple tokens when contains doubles", func() {
+		tokens := Tokenizer("0.4 * 4")
+		expectTokens := []string{"0.4", "*", "4"}
+
+		Expect(tokens).To(Equal(expectTokens))
+	})
+
+	It("Return list of simple tokens when contains doubles", func() {
+		tokens := Tokenizer(".4 * 4")
+		expectTokens := []string{".4", "*", "4"}
+
+		Expect(tokens).To(Equal(expectTokens))
+	})
+
 	It("Return list of simple tokens when contains ^", func() {
 		tokens := Tokenizer("44 ^ 47")
 		expectTokens := []string{"44", "^", "47"}
@@ -73,6 +94,11 @@ var _ = Describe("TokenizerValidator", func() {
 		{
 			name:     "Validate 1 + 2 * 3 / (4 ^ 5) * 6",
 			input:    "1 + 2 * 3 / (4 ^ 5) * 6",
+			expected: true,
+		},
+		{
+			name:     "Validate 1.5 + 2.6 * 3 / (4.7 ^ .5) * 6",
+			input:    "1.5 + 2.6 * 3 / (4.7 ^ .5) * 6",
 			expected: true,
 		},
 		//false cases
@@ -134,6 +160,11 @@ var _ = Describe("TokenizerValidator", func() {
 		{
 			name:     "Validate 1 + 2 * 3 / (4 ^ 5) * () * 6 *  ()",
 			input:    "1 + 2 * 3 / (4 ^ 5) * () * 6 *  ()",
+			expected: false,
+		},
+		{
+			name:     "Validate 1.5 + 2. * 3 / (.7 ^ 5) * 6",
+			input:    "1.5 + 2. * 3 / (.7 ^ 5) * 6",
 			expected: false,
 		},
 	}

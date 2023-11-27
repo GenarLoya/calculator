@@ -17,7 +17,7 @@ func TestPostFixGenerator(t *testing.T) {
 
 var _ = Describe("PostfixGenarator", func() {
 	It("Return postfix expression '1+2' => '12+'", func() {
-		tokens, _ := tManager.TokenManager("1 + 2")
+		tokens, _ := tManager.TokenManager("1+2")
 		postfix := pGen.PostfixGenerator(tokens)
 
 		expectTokens := []string{"1", "2", "+"}
@@ -59,8 +59,13 @@ var _ = Describe("Src/InfixGenerator/InfixGeneratorValidator", func() {
 	}{
 		{
 			name:     "Calculate 1 + 2",
-			input:    "1 + 2",
+			input:    "1+2",
 			expected: 3,
+		},
+		{
+			name:     "Calculate 1 + 2.2",
+			input:    "1+2.2",
+			expected: 3.2,
 		},
 		{
 			name:     "Calculate 3*4*(1 + 2)",

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strings"
 )
@@ -10,11 +11,8 @@ import (
 // Tokens are defined as numbers, operators (+, -, *, /, ^), and parentheses.
 // The function uses a regular expression to find all the tokens in the input string.
 func Tokenizer(text string) []string {
-
-	regex := regexp.MustCompile(`\d+|\+|\-|\*|\/|\(|\)|\^`)
-
+	regex := regexp.MustCompile(`\d*\.\d+|\d+|\+|\-|\*|\/|\(|\)|\^`)
 	tokens := regex.FindAllString(text, -1)
-
 	return tokens
 }
 
@@ -23,7 +21,8 @@ func TokenizerValidator(text string) bool {
 	text = strings.ReplaceAll(text, " ", "")
 
 	// Check for invalid characters
-	invalidChars := regexp.MustCompile(`[^0-9+\-*/^()]`)
+	invalidChars := regexp.MustCompile(`[^0-9+\-*/^()\.]`)
+
 	if invalidChars.MatchString(text) {
 		return false
 	}
@@ -40,8 +39,13 @@ func TokenizerValidator(text string) bool {
 		return false
 	}
 
+	invalidPoints := regexp.MustCompile(`[\.]{2,}`)
+	if invalidPoints.MatchString(text) {
+		return false
+	}
+
 	// Check for valid operators
-	validOperators := regexp.MustCompile(`[+*/^-]`)
+	validOperators := regexp.MustCompile(`[+*/^\-\.]`)
 	if !validOperators.MatchString(text) {
 		return false
 	}
@@ -49,6 +53,13 @@ func TokenizerValidator(text string) bool {
 	// Check for invalid placement of parentheses
 	invalidOpenParentheses := regexp.MustCompile(`\d+\(`)
 	if invalidOpenParentheses.MatchString(text) {
+		return false
+	}
+
+	// Check for invalid placement of parentheses
+	invalidDouble := regexp.MustCompile(`[0-9]+\.[^0-9]`)
+	if invalidDouble.MatchString(text) {
+		fmt.Println(text, "VALIDATING DOUBLE")
 		return false
 	}
 

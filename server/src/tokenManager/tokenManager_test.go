@@ -43,6 +43,18 @@ var _ = Describe("New Units", func() {
 				Is: tManager.Operator,
 			},
 		},
+		{
+			name:  "Teste 3",
+			input: "2.2",
+			expected: tManager.Unit{
+				Unit: "2.2",
+				Ps: tManager.Ps{
+					Pe: 0,
+					Pp: 0,
+				},
+				Is: tManager.Number,
+			},
+		},
 	}
 
 	for _, test := range tokenToUnittest {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	. "genarold/calculator/src/httpserver"
 )
 
@@ -11,6 +12,7 @@ func main() {
 	err := srv.ListenAndServe()
 
 	if err != nil {
+		fmt.Println("Errowferbervr: ", err)
 		panic(err)
 	}
 

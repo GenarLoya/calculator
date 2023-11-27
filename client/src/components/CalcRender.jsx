@@ -7,7 +7,7 @@ export default function CalcRender() {
 
   function deleteLastChar() {
     console.log("deleteLastChar");
-    setDisplay(display.slice(0, -1));
+    setDisplay(String(display).slice(0, -1));
   }
 
   function clear() {
@@ -52,14 +52,28 @@ export default function CalcRender() {
       <div className="flex space-x-2 h-10%">
         <input
           type="text"
+          /**Validating only calculator chars */
+
           value={display}
           role="calc-display"
           className="h-full px-2 pt-3 mb-5  bg-neutral-3 rounded-3 text-lg cursor-cell ring-0 focus:ring-0 focus:shadow-slate-8 focus:shadow-lg focus:outline-none duration-150 border-0"
           style={{ fontFamily: "system-ui" }}
-          onChange={(e) => setDisplay(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            const regex = /^[\d+\-*/()^/./]*$/; // Regular expression for numbers and basic math operators
+
+            if (regex.test(value)) {
+              setDisplay(value);
+            }
+          }}
         ></input>
 
-        <button className="bg-red rounded-3 h-fullpx-2 pt-3 mb-5 border-none focus:outline-blueGray duration-150 hover:scale-150" onClick={deleteLastChar}>Del</button>
+        <button
+          className="bg-red rounded-3 h-fullpx-2 pt-3 mb-5 border-none focus:outline-blueGray duration-150 hover:scale-150"
+          onClick={deleteLastChar}
+        >
+          Del
+        </button>
       </div>
       <section role="calc-buttons" className="grid grid-cols-4 gap-4 px-1 py-2">
         <CalculatorButton value="C" onClick={clear} />

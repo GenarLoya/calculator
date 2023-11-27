@@ -18,8 +18,10 @@ func PostfixGenerator(units []*tManager.Unit) []*tManager.Unit {
 			postfix.Push(unit)
 		} else if unit.Is == tManager.Operator {
 			if stack.IsEmpty() {
+				fmt.Println("NUMBER")
 				stack.Push(unit)
 			} else {
+				fmt.Println("OPERATOR")
 
 				if unit.Unit == "(" {
 					stack.Push(unit)
@@ -27,6 +29,7 @@ func PostfixGenerator(units []*tManager.Unit) []*tManager.Unit {
 				}
 
 				if unit.Unit == ")" {
+					fmt.Println("PARENT")
 					for {
 						val, _ := stack.Pop()
 						if val.Unit == "(" {
@@ -42,6 +45,7 @@ func PostfixGenerator(units []*tManager.Unit) []*tManager.Unit {
 				if ok && (unit.Ps.Pe > peek.Ps.Pp) {
 					stack.Push(unit)
 				} else {
+					fmt.Println("PSPE")
 					stack.Pop()
 
 					if ok {
@@ -53,18 +57,25 @@ func PostfixGenerator(units []*tManager.Unit) []*tManager.Unit {
 		}
 	}
 
+	fmt.Println("HOLA", postfix, stack)
+
 	for !stack.IsEmpty() {
 		val, _ := stack.Pop()
 
 		postfix.Push(val)
 	}
 
+	fmt.Println("HOLA2")
 	return postfix
 }
 
 func PostFixCalculator(units []*tManager.Unit) (float64, error) {
 	stack := utils.Stack[*tManager.Unit]{}
 	result := 0.0
+
+	for _, unit := range units {
+		fmt.Println(unit)
+	}
 
 	for _, unit := range units {
 		if unit.Is == tManager.Number {
@@ -116,9 +127,17 @@ func PostfixManager(text string) (float64, error) {
 		return 0.0, errFormat
 	}
 
+	fmt.Println(text)
+
 	postfix := PostfixGenerator(tokens)
 
+	for _, unit := range postfix {
+		fmt.Println(unit)
+	}
+
 	result, err := PostFixCalculator(postfix)
+
+	println("HOLA 3")
 
 	if err != nil {
 		return 0.0, err
